@@ -91,20 +91,23 @@ int main(void)
 
   /* Infinite loop */
   int cnt = 1;
+  HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, 1);
+  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, 1);
   /* USER CODE BEGIN WHILE */
   while (1)
   {
 	  if (cnt == 1 || cnt == 2) {
       // Turn on RED LED (PA5) and turn off YELLOW LED (PA6)
       HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, 0);
-	  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, 1);
+      HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, 1);
 	  } else {
       // Turn off RED LED (PA5) and turn on YELLOW LED (PA6)
       HAL_GPIO_WritePin(GPIOA, LED_RED_Pin, 1);
       HAL_GPIO_WritePin(GPIOA, LED_YELLOW_Pin, 0);
 	  }
+
 	  cnt = cnt == 4 ? cnt - 4 + 1 : cnt + 1;
-      HAL_Delay(1000);
+    HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
