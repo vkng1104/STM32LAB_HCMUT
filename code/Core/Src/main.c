@@ -58,6 +58,12 @@ void clearAllClock() {
 	GPIOA->ODR = 0;
 	HAL_Delay(1000);
 }
+
+void setNumberOnClock(int num) {
+	uint32_t code[12] = {16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768};
+	GPIOA->ODR = code[num];
+	HAL_Delay(1000);
+}
 /* USER CODE END 0 */
 
 /**
@@ -97,7 +103,7 @@ int main(void)
   int hour = 0, cnt = 16;
   while (1)
   {
-	  if (hour == 4) clearAllClock();
+	  if (hour == 4) setNumberOnClock(0);
 	  GPIOA->ODR = cnt;
 	  cnt *= 2;
 	  if (++hour == 12) {
