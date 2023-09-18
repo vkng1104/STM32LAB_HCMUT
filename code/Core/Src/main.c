@@ -54,10 +54,6 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void clearAllClock() {
-	GPIOA->ODR = 0;
-	HAL_Delay(1000);
-}
 /* USER CODE END 0 */
 
 /**
@@ -97,14 +93,13 @@ int main(void)
   int hour = 0, cnt = 16;
   while (1)
   {
-	  if (hour == 4) clearAllClock();
 	  GPIOA->ODR = cnt;
 	  cnt *= 2;
 	  if (++hour == 12) {
 		  hour = 0;
 		  cnt = 16;
 	  }
-	  HAL_Delay(1000);
+	  HAL_Delay(100);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
