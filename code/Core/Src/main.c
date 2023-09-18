@@ -106,17 +106,30 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  int hour = 0, cnt = 16;
+  int hour, cnt_hour, minute, cnt_minute, second, cnt_second;
+  hour = minute = second = 0;
+  cnt_hour = cnt_minute = cnt_second = 16;
   while (1)
   {
-	  if (hour == 4) clearNumberOnClock(hour);
-	  GPIOA->ODR = cnt;
-	  cnt *= 2;
-	  if (++hour == 12) {
-		  hour = 0;
-		  cnt = 16;
+	  GPIOA->ODR = cnt_hour | cnt_minute | cnt_second;
+	  if (second / 5 != (second + 1) / 5)
+		  cnt_second *= 2;
+	  if (++second == 60) {
+		  second = 0;
+		  cnt_second = 16;
+		  if (minute / 5 != (minute + 1) / 5)
+			  cnt_minute *= 2;
+		  if (++minute == 60) {
+			  minute = 0;
+			  cnt_minute = 16;
+			  cnt_hour *= 2;
+			  if(++hour == 12) {
+				  hour = 0;
+				  cnt_hour = 16;
+			  }
+		  }
 	  }
-	  HAL_Delay(1000);
+	  HAL_Delay(20);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
