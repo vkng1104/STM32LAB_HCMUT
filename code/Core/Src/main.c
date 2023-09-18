@@ -54,16 +54,9 @@ static void MX_GPIO_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void display7SEG(int num, int num2){
-	uint32_t odr[10] = {0x01, 0x4F, 0x12, 0x06, 0x4C, 0x24, 0x20, 0x0F, 0x00, 0x04};
-	uint32_t odr_2[10] = {0x80, 0x2780, 0x900, 0x300, 0x2600, 0x1200, 0x1000, 0x780, 0x00, 0x200};
-	GPIOB->ODR = odr[num] | odr_2[num2];
-}
-
-void light(uint16_t red, uint16_t yellow, uint16_t green, int index) {
-	HAL_GPIO_WritePin(GPIOA, red, index != 1);
-	HAL_GPIO_WritePin(GPIOA, yellow, index != 2);
-	HAL_GPIO_WritePin(GPIOA, green, index != 3);
+void clearAllClock() {
+	GPIOA->ODR = 0;
+	HAL_Delay(1000);
 }
 /* USER CODE END 0 */
 
@@ -104,6 +97,7 @@ int main(void)
   int hour = 0, cnt = 16;
   while (1)
   {
+	  if (hour == 4) clearAllClock();
 	  GPIOA->ODR = cnt;
 	  cnt *= 2;
 	  if (++hour == 12) {
